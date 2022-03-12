@@ -9,6 +9,7 @@ const AuthContext = createContext({
 
 // The data we need access to from Google
 const config = {
+  // intentionally missing keys
   scopes: ['profile', 'email'],
   permissions: ['public_profile', 'email', 'gender', 'location'],
 }
@@ -17,13 +18,18 @@ export const AuthProvider = ({ children }) => {
 
   // connect to Google Log-In pop-up
   const signInWithGoogle = async() => {
-    await Google.logInAsync()
+    Google.logInAsync(config).then(async (logInResult) => {
+      if(logInResult.type === 'success') {
+        // login...
+      }
+    })
   }
 
   return (
     <AuthContext.Provider
       value={{
         user: null,
+        signInWithGoogle
       }}
     >
       {children}
