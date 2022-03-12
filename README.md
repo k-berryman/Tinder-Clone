@@ -229,7 +229,7 @@ export default function useAuth() {
 }
 ```
 
-#### Pass Username Down (from useAuth, to ChatScreen)
+#### Pass Username Down (from useAuth, to ChatScreen and StackNavigator)
 `useAuth.js`
 ```
 <AuthContext.Provider
@@ -241,7 +241,16 @@ export default function useAuth() {
 </AuthContext.Provider>
 ```
 
-`ChatScreen.js`
+----
+
+`ChatScreen.js` and `StackNavigator.js` (although make sure their directory references are correct)
+```
+import useAuth from '../hooks/useAuth';
+const { user } = useAuth();
+console.log(user);
+```
+
+----
 
 This is possible because the screens are children of useAuth in 	`App.js`
 
@@ -249,6 +258,54 @@ This is possible because the screens are children of useAuth in 	`App.js`
 
 Wonderful, at this point we've used the Context API!
 
+
+## Implement Auth
+#### Set up Firebase iOS
+Create a new firebase project, click gear to go to Project Settings
+
+Scroll down to your apps
+Select iOS
+Under Apple bundle ID, type `host.exp.exponent` because of Expo — this is important!! this allows Expo to get through Google. If you don't do this, you'll get a redirect uri error.
+**If you try to deploy this app to the app store**, repeat this step but change the Apple bundle ID
+Click register
+
+Click the download for GoogleService-info.plist
+
+Put `GoogleService-info.plist` into the main dir
+This is basically the key that allows us to connect to our backend (AKA IT'S SECRETTT)
+
+Put it in your `.gitignore` for now.
+If this project gets bigger, make some environment variables
+
+In Firebase, click next after downloading that.
+Ignore the SDK
+Keep clicking next
+
+Now it shows up under your apps!
+Check for App ID, bundle ID, etc
+
+#### Set up Firebase Android
+Scroll down to your apps
+Add App
+Select Android
+Under Android package name, type `host.exp.exponent`
+Click register
+
+Click the download for google-services.json
+
+Put `google-services.json` into the main dir
+
+Put it in your `.gitignore` for now.
+If this project gets bigger, make some environment variables
+
+In Firebase, click next after downloading that.
+Ignore the SDK
+Keep clicking next
+
+Now it shows up under your apps!
+Check for App ID, bundle ID,
+
+## Implement Google Auth
 
 # Notes
 - Instead of `<div>`s, we have `<View>`s
