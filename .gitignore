@@ -1,6 +1,8 @@
 GoogleService-Info.plist
 google-services.json
 
+hooks/useAuth.js
+
 node_modules/
 .expo/
 dist/

@@ -1,16 +1,29 @@
 import React, { createContext, useContext } from 'react'
 import { View, Text } from 'react-native'
+import * as Google from 'expo-google-app-auth'
 
 // Create the data layer for auth data
 const AuthContext = createContext({
-  // initial state is blank
+  // Initial state is blank
 });
 
+// The data we need access to from Google
+const config = {
+  scopes: ['profile', 'email'],
+  permissions: ['public_profile', 'email', 'gender', 'location'],
+}
+
 export const AuthProvider = ({ children }) => {
+
+  // connect to Google Log-In pop-up
+  const signInWithGoogle = async() => {
+    await Google.logInAsync()
+  }
+
   return (
     <AuthContext.Provider
       value={{
-        user: 'Kaitlin',
+        user: null,
       }}
     >
       {children}
